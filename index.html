@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <h1>Add a new pizza to the menu!</h1>
+      <p>
+        Required fields are followed by
+        <strong><abbr title="required">*</abbr></strong>
+      </p>
+      <section>
+        <div>
+          <label for="pizzaName"
+            >Pizza name:
+            <abbr title="required" aria-label="required">*</abbr></label
+          >
+          <input
+            id="pizzaName"
+            type="text"
+            name="pizzaName"
+            placeholder="pizza name"
+            required
+          />
+          <p id="pizza-name-validity-msg"></p>
+
+          <label for="price">Price (Eu): </label>
+          <abbr title="required" aria-label="required">*</abbr>
+          <input
+            type="number"
+            id="price"
+            placeholder="0.00"
+            min="0.00"
+            step=".01"
+            required
+          />
+          <p id="price-validity-msg"></p>
+
+          <label for="heat">Heat: </label>
+          <input type="number" id="heat" min="1" max="3" step="1" />
+
+          <div class="checkbox-group required" id="toppings">
+            <h3>
+              TOPPINGS: <abbr title="required" aria-label="required">*</abbr>
+            </h3>
+            <div>
+              <label for="cheese">cheese: </label>
+              <input
+                type="checkbox"
+                id="cheese"
+                name="checkbox_cheese"
+                value="cheese"
+              />
+            </div>
+            <div>
+              <label for="salami">salami: </label>
+              <input
+                type="checkbox"
+                id="salami"
+                name="checkbox_salami"
+                value="salami"
+              />
+            </div>
+            <div>
+              <label for="onion">onion: </label>
+              <input
+                type="checkbox"
+                id="onion"
+                name="checkbox_onion"
+                value="onion"
+              />
+            </div>
+            <p id="toppings-validity-msg"></p>
+          </div>
+
+          <div id="image-checkbox">
+            <h3>Shoose pizza image:</h3>
+            <ul>
+              <li>
+                <input type="radio" id="pizza-margarita" name="photo" />
+                <label for="pizza-margarita" class="radio-boxes">
+                  <img src="./assets/img/margarita.jpg" alt="pizza margarita" />
+                </label>
+              </li>
+              <li>
+                <input type="radio" id="pizza-onion" name="photo" />
+                <label for="pizza-onion" class="radio-boxes">
+                  <img src="./assets/img/onion.jpg" alt="pizza margarita" />
+                </label>
+              </li>
+              <li>
+                <input type="radio" id="pizza-salami" name="photo" />
+                <label for="pizza-salami" class="radio-boxes">
+                  <img src="./assets/img/salami.jpg" alt="pizza margarita" />
+                </label>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <button type="button" id="submitForm">Add New pizza</button>
+      </section>
+    </form>
+    <script type="text/javascript" src="./scripts.js"></script>
+  </body>
+</html>
