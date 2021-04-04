@@ -43,6 +43,7 @@
 
           <label for="heat">Heat: </label>
           <input type="number" id="heat" min="1" max="3" step="1" />
+          <p id="heat-validity-msg"></p>
 
           <div class="checkbox-group required" id="toppings">
             <h3>
@@ -138,7 +139,10 @@
         <div class="pizza-title-block">
           <h2 class="pizza-name"></h2>
         </div>
-        <h3 class="pizza-price"></h3>
+        <div class="price-box">
+          <h3 class="pizza-price"></h3>
+          <h3>Eu</h3>
+        </div>
         <p class="pizza-toppings-list"></p>
         <img class="chosen-pizza-photo" src="" alt="" />
         <button type="button" class="remove-button">Remove pizza</button>
