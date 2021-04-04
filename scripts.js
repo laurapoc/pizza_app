@@ -1,3 +1,4 @@
+const PIZZA_STORAGE_KEY = "PIZZA_STORAGE";
 const submit = document.getElementById("submitForm");
 let pizzaNameInput = document.getElementById("pizzaName");
 let priceInput = document.getElementById("price");
@@ -7,9 +8,41 @@ let pizzaImageInputs = document.querySelectorAll("#image-checkbox li input");
 let pizzaImageInputsSrc = document.querySelectorAll(
   "#image-checkbox li  label img"
 );
+let sortingRadioInputs = document.querySelectorAll(
+  ".sort-radio-group div input"
+);
 
+document.getElementById("sort-name").onclick = () => {
+  clearPizzaList();
+  let pizzaList = getAllStorageValues();
+  sortPizzaListByName(pizzaList);
+  displaySortedPizzaList(pizzaList);
+};
+
+document.getElementById("sort-price").onclick = () => {
+  clearPizzaList();
+  let pizzaList = getAllStorageValues();
+  sortPizzaListByPrice(pizzaList);
+  displaySortedPizzaList(pizzaList);
+};
+
+document.getElementById("sort-heat").onclick = () => {
+  clearPizzaList();
+  let pizzaList = getAllStorageValues();
+  sortPizzaListByHeat(pizzaList);
+  displaySortedPizzaList(pizzaList);
+};
+
+loopThroughAllStorageValuesAndDisplayThem();
 submit.addEventListener("click", savePizza);
-// window.addEventListener()
+document.addEventListener("keyup", function (event) {
+  // check if key on the keyboard is "Enter"
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    savePizza();
+  }
+});
+
 function savePizza() {
   //   construct pizza object:
   let pizza = {};
@@ -18,22 +51,26 @@ function savePizza() {
   pizza.heat = heatInput.value;
   pizza.toppings = getCheckedToppings();
   pizza.image = checkPickedPizzaImage();
-    // console.log(validForm());
+  // console.log(validForm());
+
   getCheckedToppings();
   checkPickedPizzaImage();
   //   store results to localStorage:
-  let result;
   if (validForm() === true) {
-    result = localStorage.setItem(pizzaNameInput.value, JSON.stringify(pizza));
+    let pizzaStorage = localStorage.getItem(PIZZA_STORAGE_KEY)
+      ? JSON.parse(localStorage.getItem(PIZZA_STORAGE_KEY))
+      : [];
+    pizzaStorage.push(pizza);
+    localStorage.setItem(PIZZA_STORAGE_KEY, JSON.stringify(pizzaStorage));
+
+    addPizzaInstance(pizza);
+    sortPizzaList();
     clearInputFields();
     clearValidationMessages();
   } else {
     // alert("please check if all the fields ar valid");
     showValidationMessages();
   }
-
-  getpizzaNamesInLocalStorage();
-  return result;
 }
 
 // check if all fields are filled
@@ -51,7 +88,7 @@ function validForm() {
   return false;
 }
 
-let toppingsValidationMessage = "Value must be greater than or equal to 2"
+let toppingsValidationMessage = "Value must be greater than or equal to 2";
 // // check inputs validity:
 function showValidationMessages() {
   checkDuplicateNames();
@@ -62,10 +99,10 @@ function showValidationMessages() {
     document.getElementById("price-validity-msg").innerHTML =
       priceInput.validationMessage;
   } else if (getCheckedToppings().length < 2) {
-    document.getElementById("toppings-validity-msg").innerHTML =
-    toppingsValidationMessage;
+    document.getElementById(
+      "toppings-validity-msg"
+    ).innerHTML = toppingsValidationMessage;
   }
-  
 }
 // check if pizza name already exists in localStorage
 function checkDuplicateNames() {
@@ -74,10 +111,10 @@ function checkDuplicateNames() {
   let duplicated = false;
   let allNames = getpizzaNamesInLocalStorage();
 
-  if(allNames.includes( pizzaNameInput.value )) {
+  if (allNames.includes(pizzaNameInput.value)) {
     document.getElementById("pizza-name-validity-msg").innerHTML =
-    pizzaNameInput.value + duplicateErrorMessage;
-      duplicated = true;
+      pizzaNameInput.value + duplicateErrorMessage;
+    duplicated = true;
   }
   // console.log(duplicated);
   return duplicated;
@@ -121,15 +158,8 @@ function checkPickedPizzaImage() {
 
 // get all values from local storage
 function getAllStorageValues() {
-  var values = [],
-    keys = Object.keys(localStorage),
-    i = keys.length;
-
-  while (i--) {
-    values.push(localStorage.getItem(keys[i]));
-  }
-  //   console.log(values);
-  return values;
+  let pizzaStorage = localStorage.getItem(PIZZA_STORAGE_KEY);
+  return pizzaStorage ? JSON.parse(pizzaStorage) : [];
 }
 
 // get all pizza names in localStorage
@@ -137,9 +167,9 @@ function getpizzaNamesInLocalStorage() {
   let storageItems = getAllStorageValues();
   let names = [];
   storageItems.forEach((item) => {
-    let pizza = JSON.parse(item);
-    names.push(pizza.name);
+    names.push(item.name);
   });
+  // console.log(names);
   return names;
 }
 
@@ -167,5 +197,128 @@ function clearInputFields() {
         pizzaImageInputs[i].checked = false;
       }
     }
+  }
+}
+
+function addPizzaInstance(pizzaObj) {
+  let parent = document.querySelector("#pizza_list_parent");
+  let template = document.querySelector("#new_pizza");
+  // clone the new li and insert it into the parent ul
+  let clone = template.content.cloneNode(true);
+  let createdPizzaName = clone.querySelector(".pizza-name");
+  // take data from local storage and push it into template instance
+  createdPizzaName.textContent = pizzaObj.name;
+  let numberOfCreatedChillis = 0;
+  while (numberOfCreatedChillis < pizzaObj.heat) {
+    let chilliImage = document.createElement("img");
+    chilliImage.src = "./assets/img/chilli.png";
+    chilliImage.classList.add("chilli-pepper-image");
+    chilliImage.alt = `${pizzaObj.heat} chilli`;
+    let chilliParent = clone.querySelector(".pizza-title-block");
+    chilliParent.appendChild(chilliImage);
+    numberOfCreatedChillis++;
+  }
+  let createdPizzaPrice = clone.querySelector(".pizza-price");
+  createdPizzaPrice.textContent = pizzaObj.price;
+  let createdPizzaToppings = clone.querySelector(".pizza-toppings-list");
+  createdPizzaToppings.textContent = pizzaObj.toppings.join(", ");
+  if (pizzaObj.image) {
+    let createdPizzaPhoto = clone.querySelector(".chosen-pizza-photo");
+    createdPizzaPhoto.src = pizzaObj.image;
+    createdPizzaPhoto.alt = pizzaObj.name;
+  }
+
+  parent.appendChild(clone);
+}
+
+function getCheckedSorting() {
+  let checkedSorting;
+  for (var i = 0; i < sortingRadioInputs.length; i++) {
+    // Check if the element is a radio.
+    if (sortingRadioInputs[i].type == "radio") {
+      // check if the radio is checked.
+      if (sortingRadioInputs[i].checked) {
+        checkedSorting = sortingRadioInputs[i].value;
+      }
+    }
+  }
+  return checkedSorting;
+}
+
+function loopThroughAllStorageValuesAndDisplayThem() {
+  let allValues = getAllStorageValues();
+  // sort pizza (default option: by name)
+  sortPizzaList();
+  displaySortedPizzaList(allValues);
+}
+
+function clearPizzaList() {
+  let listParent = document.getElementById("pizza_list_parent");
+  listParent.innerHTML = "";
+}
+
+function displaySortedPizzaList(pizzaList) {
+  pizzaList.forEach((pizza) => {
+    addPizzaInstance(pizza);
+  });
+}
+
+function sortPizzaListByName(allPizzas) {
+  allPizzas.sort((p1, p2) => {
+    let name1 = p1.name.toUpperCase(); // ignore upper and lowercase
+    let name2 = p2.name.toUpperCase(); // ignore upper and lowercase
+    if (name1 < name2) {
+      return -1;
+    }
+    if (name1 > name2) {
+      return 1;
+    }
+    return 0;
+  });
+}
+
+function sortPizzaListByPrice(allPizzas) {
+  allPizzas.sort((p1, p2) => {
+    let price1 = Number(p1.price);
+    let price2 = Number(p2.price);
+    if (price1 < price2) {
+      return -1;
+    }
+    if (price1 > price2) {
+      return 1;
+    }
+    return 0;
+  });
+}
+
+function sortPizzaListByHeat(allPizzas) {
+  allPizzas.sort((p1, p2) => {
+    let heat1 = Number(p1.heat);
+    let heat2 = Number(p2.heat);
+    console.log(typeof heat1, typeof heat2);
+    if (heat1 < heat2) {
+      return -1;
+    }
+    if (heat1 > heat2) {
+      return 1;
+    }
+    return 0;
+  });
+}
+
+function sortPizzaList() {
+  let allPizzas = getAllStorageValues();
+  if (getCheckedSorting() === "Name") {
+    clearPizzaList();
+    sortPizzaListByName(allPizzas);
+    displaySortedPizzaList(allPizzas);
+  } else if (getCheckedSorting() === "Price") {
+    clearPizzaList();
+    sortPizzaListByPrice(allPizzas);
+    displaySortedPizzaList(allPizzas);
+  } else if (getCheckedSorting() === "Heat") {
+    clearPizzaList();
+    sortPizzaListByHeat(allPizzas);
+    displaySortedPizzaList(allPizzas);
   }
 }
