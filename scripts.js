@@ -1,6 +1,5 @@
 const PIZZA_STORAGE_KEY = "PIZZA_STORAGE";
 const submit = document.getElementById("submitForm");
-
 const removeMessage = document.getElementById("remove-pizza-message");
 const confirmPizzaRemove = document.getElementById("confirm-remove");
 const cancelPizzaRemove = document.getElementById("cancel-remove");
@@ -38,7 +37,9 @@ document.getElementById("sort-heat").onclick = () => {
 };
 
 loopThroughAllStorageValuesAndDisplayThem();
+
 submit.addEventListener("click", savePizza);
+
 document.addEventListener("keyup", function (event) {
   // check if key on the keyboard is "Enter"
   if (event.keyCode === 13) {
@@ -54,11 +55,9 @@ function savePizza() {
   pizza.price = Number(priceInput.value).toFixed(2);
   pizza.heat = heatInput.value;
   pizza.toppings = getCheckedToppings();
-  pizza.image = checkPickedPizzaImage();
-  // console.log(validForm());
-
+  pizza.image = getPickedPizzaImage();
   getCheckedToppings();
-  checkPickedPizzaImage();
+  getPickedPizzaImage();
   //   store results to localStorage:
   if (validForm() === true) {
     let pizzaStorage = localStorage.getItem(PIZZA_STORAGE_KEY)
@@ -72,7 +71,6 @@ function savePizza() {
     clearInputFields();
     clearValidationMessages();
   } else {
-    // alert("please check if all the fields ar valid");
     showValidationMessages();
   }
 }
@@ -81,9 +79,9 @@ function savePizza() {
 function validForm() {
   if (
     pizzaNameInput.value &&
-    checkDuplicateNames() === false &&
+    checkDuplicatePizzaNames() === false &&
     priceInput.value > 0 &&
-    heatInput.value <= 3 &&
+    ((heatInput.value > 0 && heatInput.value <= 3) || !heatInput.value) &&
     getCheckedToppings().length !== 0 &&
     getCheckedToppings().length >= 2
   ) {
@@ -92,10 +90,10 @@ function validForm() {
   return false;
 }
 
-let toppingsValidationMessage = "Value must be greater than or equal to 2";
 // // check inputs validity:
 function showValidationMessages() {
-  checkDuplicateNames();
+  let toppingsValidationMessage = "Value must be greater than or equal to 2";
+  checkDuplicatePizzaNames();
   if (!pizzaNameInput.checkValidity()) {
     document.getElementById("pizza-name-validity-msg").innerHTML =
       pizzaNameInput.validationMessage;
@@ -106,21 +104,23 @@ function showValidationMessages() {
     document.getElementById(
       "toppings-validity-msg"
     ).innerHTML = toppingsValidationMessage;
+  } else if (!heatInput.checkValidity()) {
+    document.getElementById("heat-validity-msg").innerHTML =
+      heatInput.validationMessage;
   }
 }
+
 // check if pizza name already exists in localStorage
-function checkDuplicateNames() {
+function checkDuplicatePizzaNames() {
   let duplicateErrorMessage =
     " name already exists. Please choose other pizza name.";
   let duplicated = false;
   let allNames = getpizzaNamesInLocalStorage();
-
   if (allNames.includes(pizzaNameInput.value)) {
     document.getElementById("pizza-name-validity-msg").innerHTML =
       pizzaNameInput.value + duplicateErrorMessage;
     duplicated = true;
   }
-  // console.log(duplicated);
   return duplicated;
 }
 
@@ -130,7 +130,7 @@ function clearValidationMessages() {
   document.getElementById("toppings-validity-msg").innerHTML = "";
 }
 
-// create checked toppings list:
+// get checked toppings values and push them into picked toppings array
 function getCheckedToppings() {
   let toppingsArray = [];
   for (var i = 0; i < checkedToppings.length; i++) {
@@ -145,8 +145,8 @@ function getCheckedToppings() {
   return toppingsArray;
 }
 
-// find checked pizza image:
-function checkPickedPizzaImage() {
+// get checked pizza image and set img src
+function getPickedPizzaImage() {
   let checkedImage;
   for (var i = 0; i < pizzaImageInputs.length; i++) {
     // Check if the element is a radio.
@@ -173,7 +173,6 @@ function getpizzaNamesInLocalStorage() {
   storageItems.forEach((item) => {
     names.push(item.name);
   });
-  // console.log(names);
   return names;
 }
 
@@ -183,7 +182,6 @@ function clearInputFields() {
   priceInput.value = "";
   heatInput.value = "";
   for (var i = 0; i < checkedToppings.length; i++) {
-    // Check if the element is a checkbox.
     if (checkedToppings[i].type == "checkbox") {
       // check if the checkbox is checked.
       //   if it is - set checked to false
@@ -193,7 +191,6 @@ function clearInputFields() {
     }
   }
   for (var i = 0; i < pizzaImageInputs.length; i++) {
-    // Check if the element is a radio.
     if (pizzaImageInputs[i].type == "radio") {
       // check if the radio is checked.
       //   if it is - set checked to false
@@ -209,8 +206,8 @@ function addPizzaInstance(pizzaObj) {
   let template = document.querySelector("#new_pizza");
   // clone the new li and insert it into the parent ul
   let clone = template.content.cloneNode(true);
-  let createdPizzaName = clone.querySelector(".pizza-name");
   // take data from local storage and push it into template instance
+  let createdPizzaName = clone.querySelector(".pizza-name");
   createdPizzaName.textContent = pizzaObj.name;
   let numberOfCreatedChillis = 0;
   while (numberOfCreatedChillis < pizzaObj.heat) {
@@ -237,12 +234,13 @@ function addPizzaInstance(pizzaObj) {
   remove.addEventListener("click", () => {
     removeMessage.classList.add("show");
     confirmPizzaRemove.addEventListener("click", () => {
-    removePizzaFromListAndFromLocalStorage(remove);
-    removeMessage.classList.remove("show");
-    })
+      removePizzaFromListAndFromLocalStorage(remove);
+      sortPizzaList();
+      removeMessage.classList.remove("show");
+    });
     cancelPizzaRemove.addEventListener("click", () => {
-    removeMessage.classList.remove("show");
-    })
+      removeMessage.classList.remove("show");
+    });
   });
   parent.appendChild(clone);
 }
@@ -350,3 +348,4 @@ function removePizzaFromListAndFromLocalStorage(button) {
     displaySortedPizzaList(items);
   }
 }
+
