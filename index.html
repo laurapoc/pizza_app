@@ -105,6 +105,11 @@
         <button type="button" id="submitForm">Add New pizza</button>
       </section>
     </form>
+    <div id="remove-pizza-message" class="removePizzaMessage">
+      <p>Do you really want to remove pizza from menu?</p>
+      <button id="confirm-remove">Yes</button>
+      <button id="cancel-remove">No</button>
+    </div>
     <div>
       <h1>PIZZA MENU:</h1>
       <form class="sort-radio-group">
@@ -136,6 +141,7 @@
         <h3 class="pizza-price"></h3>
         <p class="pizza-toppings-list"></p>
         <img class="chosen-pizza-photo" src="" alt="" />
+        <button type="button" class="remove-button">Remove pizza</button>
       </li>
     </template>
     <script type="text/javascript" src="./scripts.js"></script>
