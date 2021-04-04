@@ -1,5 +1,9 @@
 const PIZZA_STORAGE_KEY = "PIZZA_STORAGE";
 const submit = document.getElementById("submitForm");
+
+const removeMessage = document.getElementById("remove-pizza-message");
+const confirmPizzaRemove = document.getElementById("confirm-remove");
+const cancelPizzaRemove = document.getElementById("cancel-remove");
 let pizzaNameInput = document.getElementById("pizzaName");
 let priceInput = document.getElementById("price");
 let heatInput = document.getElementById("heat");
@@ -227,7 +231,19 @@ function addPizzaInstance(pizzaObj) {
     createdPizzaPhoto.src = pizzaObj.image;
     createdPizzaPhoto.alt = pizzaObj.name;
   }
-
+  let removePizzaButton = clone.querySelector(".remove-button");
+  removePizzaButton.id = pizzaObj.name;
+  const remove = clone.querySelector(".remove-button");
+  remove.addEventListener("click", () => {
+    removeMessage.classList.add("show");
+    confirmPizzaRemove.addEventListener("click", () => {
+    removePizzaFromListAndFromLocalStorage(remove);
+    removeMessage.classList.remove("show");
+    })
+    cancelPizzaRemove.addEventListener("click", () => {
+    removeMessage.classList.remove("show");
+    })
+  });
   parent.appendChild(clone);
 }
 
@@ -320,5 +336,17 @@ function sortPizzaList() {
     clearPizzaList();
     sortPizzaListByHeat(allPizzas);
     displaySortedPizzaList(allPizzas);
+  }
+}
+
+function removePizzaFromListAndFromLocalStorage(button) {
+  clearPizzaList();
+  let items = getAllStorageValues();
+  for (var i = 0; i < items.length; i++) {
+    if (items[i].name === button.id) {
+      items.splice(i, 1);
+    }
+    localStorage.setItem(PIZZA_STORAGE_KEY, JSON.stringify(items));
+    displaySortedPizzaList(items);
   }
 }

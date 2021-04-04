@@ -1,3 +1,8 @@
+
+section {
+  margin: 0 auto;
+}
+
 abbr[title] {
   text-decoration: none !important;
   color: red;
@@ -82,4 +87,19 @@ ul {
 .pizza-title-block {
   display: flex;
   align-items: center;
+}
+
+.removePizzaMessage {
+  display: none;
+  border: 1px solid grey;
+  width: 400px;
+  position: fixed;
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 1);
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+}
+
+.show {
+  display: block;
 }
