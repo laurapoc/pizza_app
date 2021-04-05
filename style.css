@@ -1,11 +1,195 @@
-
-section {
+body {
   margin: 0 auto;
+  text-align: center;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.page-header {
+  margin: 0;
+  padding: 0;
+  height: 8vh;
+  line-height: 8vh;
+  text-align: left;
+  background-color: black;
+}
+
+h1,
+h2,
+h3 {
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+}
+
+#logo {
+  margin: 0 0 0 5%;
+  color: rgba(255, 255, 255, 1);
+}
+
+#slogan-block {
+  background-image: url("./assets/img/pizza.jpg");
+  height: 30vh;
+  background-position: center;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+#slogan {
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 60%;
+  height: auto;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#slogan h1 {
+  letter-spacing: 0.5rem;
+}
+
+.container {
+  width: 60%;
+  margin: 0 auto;
+}
+
+#required-description-msg {
+  font-weight: 700;
+}
+
+#create-pizza-form {
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px black;
+  background-color: rgb(216, 216, 216);
+  padding-bottom: 2%;
+  display: flex;
+  flex-direction: column;
+}
+
+#input-fields {
+  display: flex;
+  flex-direction: column;
+}
+
+input[type="text"],
+input[type="number"] {
+  border: solid 1.5px #d3d3d3;
+  box-shadow: 0 0 5pt 0.5pt #d3d3d3;
+  -webkit-transition: 1s; /* Safari */
+  transition: 0.3s;
+}
+
+input[type="checkbox"] + label,
+input[type="radio"] + label {
+  transition: 0.3s;
+}
+
+label {
+  cursor: pointer;
+}
+
+input[type="text"]:hover,
+input[type="number"]:hover,
+input[type="checkbox"]:hover + label,
+input[type="radio"]:hover + label {
+  box-shadow: 0 0 5pt 0.5pt #5e5e5e;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+  box-shadow: 0 0 5pt 0.5pt #5e5e5e;
+  outline-width: 0px;
+  outline-color: #5e5e5e;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  filter: grayscale(1);
+}
+
+#submitForm {
+  border: solid 1.5px #000000;
+  box-shadow: 0 0 5pt 0.5pt #d3d3d3;
+  line-height: 2.5;
+  padding: 0 20px;
+  transition: 0.3s;
+  border-radius: 0%;
+  color: white;
+  background-color: black;
+  text-transform: uppercase;
+}
+#submitForm:hover {
+  box-shadow: 0 0 5pt 0.5pt #5e5e5e;
+  border: solid 1.5px #b9b8b8;
+
+}
+#submitForm:focus {
+  border: solid 1.5px #b9b8b8;
+
+  box-shadow: 0 0 5pt 0.5pt #5e5e5e;
+  outline-width: 0px;
+  outline-color: #5e5e5e;
+}
+.input-blocks {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-boxes {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.input-boxes div {
+  width: 50%;
+  display: flex;
+}
+
+.labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inputs input {
+  width: 100%;
+}
+
+#toppings {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#toppings-container {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#toppings-container div {
+  width: 50%;
+  text-align: left;
+  vertical-align: top;
+}
+
+#toppings-container div h3 {
+  margin: 0;
+}
+
+.error-msg {
+  color: red;
+  font-size: 0.9rem;
 }
 
 abbr[title] {
   text-decoration: none !important;
   color: red;
+  padding-right: 2%;
 }
 
 ul li img {
@@ -89,27 +273,67 @@ ul {
   align-items: center;
 }
 
-.removePizzaMessage {
-  display: none;
-  border: 1px solid grey;
-  width: 400px;
+#remove-pizza-message {
+  /* display: none; */
+  opacity: 0;
   position: fixed;
   z-index: 10;
-  background-color: rgba(255, 255, 255, 1);
-  -webkit-box-align: center;
-  -webkit-box-pack: center;
+  background-color: rgba(255, 255, 255, 0);
+  width: 40%;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px black;
+  padding: 16px;
+  left: 28%;
+  top: 0%;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
 }
 
-.show {
-  display: block;
+#remove-pizza-message.show {
+  /* display: block; */
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 1);
+  top: 30%;
 }
 
 .price-box {
   display: flex;
   align-items: center;
-  
 }
 
 .price-box h3 {
   padding: 0 0.2rem 0 0;
+}
+
+/* responsive parts */
+
+@media screen and (max-width: 1400px) {
+  .container,
+  #slogan {
+    width: 70%;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .container,
+  #slogan {
+    width: 80%;
+  }
+  .input-boxes,
+  #toppings-container {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .input-boxes,
+  #toppings-container {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .container,
+  #slogan {
+    width: 90%;
+  }
 }

@@ -4,83 +4,141 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./style.css" />
     <title>Document</title>
   </head>
   <body>
-    <form>
-      <h1>Add a new pizza to the menu!</h1>
-      <p>
-        Required fields are followed by
-        <strong><abbr title="required">*</abbr></strong>
-      </p>
-      <section>
-        <div>
-          <label for="pizzaName"
-            >Pizza name:
-            <abbr title="required" aria-label="required">*</abbr></label
-          >
-          <input
-            id="pizzaName"
-            type="text"
-            name="pizzaName"
-            placeholder="pizza name"
-            required
-          />
-          <p id="pizza-name-validity-msg"></p>
-
-          <label for="price">Price (Eu): </label>
-          <abbr title="required" aria-label="required">*</abbr>
-          <input
-            type="number"
-            id="price"
-            placeholder="0.00"
-            min="0.00"
-            step=".01"
-            required
-          />
-          <p id="price-validity-msg"></p>
-
-          <label for="heat">Heat: </label>
-          <input type="number" id="heat" min="1" max="3" step="1" />
-          <p id="heat-validity-msg"></p>
-
-          <div class="checkbox-group required" id="toppings">
-            <h3>
-              TOPPINGS: <abbr title="required" aria-label="required">*</abbr>
-            </h3>
-            <div>
-              <label for="cheese">cheese: </label>
-              <input
-                type="checkbox"
-                id="cheese"
-                name="checkbox_cheese"
-                value="cheese"
-              />
+    <header class="page-header">
+      <h1 id="logo">pizza-app</h1>
+    </header>
+    <div id="slogan-block">
+      <div id="slogan">
+        <h1>Create your own pizza!</h1>
+      </div>
+    </div>
+    <div class="container">
+      <h2>Fill the form, press add button and have a custom pizza menu</h2>
+      <form id="create-pizza-form">
+        <div id="input-fields">
+          <div id="filling-form">
+            <p id="required-description-msg">
+              Required fields are followed by
+              <strong><abbr title="required">*</abbr></strong>
+            </p>
+            <div class="input-blocks">
+              <div class="input-boxes">
+                <div class="labels">
+                  <label for="pizzaName">Pizza name: </label>
+                  <abbr title="required" aria-label="required">*</abbr>
+                </div>
+                <div class="inputs">
+                  <input
+                    id="pizzaName"
+                    type="text"
+                    name="pizzaName"
+                    placeholder="pizza name"
+                    required
+                  />
+                </div>
+              </div>
+              <p id="pizza-name-validity-msg" class="error-msg"></p>
             </div>
-            <div>
-              <label for="salami">salami: </label>
-              <input
-                type="checkbox"
-                id="salami"
-                name="checkbox_salami"
-                value="salami"
-              />
+            <div class="input-blocks">
+              <div class="input-boxes">
+                <div class="labels">
+                  <label for="price">Price (Eu): </label>
+                  <abbr title="required" aria-label="required">*</abbr>
+                </div>
+                <div class="inputs">
+                  <input
+                    type="number"
+                    id="price"
+                    placeholder="0.00"
+                    min="0.00"
+                    step=".01"
+                    required
+                  />
+                </div>
+              </div>
+              <p id="price-validity-msg" class="error-msg"></p>
             </div>
-            <div>
-              <label for="onion">onion: </label>
-              <input
-                type="checkbox"
-                id="onion"
-                name="checkbox_onion"
-                value="onion"
-              />
+            <div class="input-blocks">
+              <div class="input-boxes">
+                <div class="labels">
+                  <label for="heat">Heat: </label>
+                </div>
+                <div class="inputs">
+                  <input type="number" id="heat" min="1" max="3" step="1" />
+                </div>
+              </div>
+              <p id="heat-validity-msg" class="error-msg"></p>
             </div>
-            <p id="toppings-validity-msg"></p>
+            <div class="checkbox-group required" id="toppings">
+              <div id="toppings-container">
+                <div>
+                  <h3>
+                    TOPPINGS:
+                    <abbr title="required" aria-label="required">*</abbr>
+                  </h3>
+                </div>
+                <div>
+                  <div>
+                    <input
+                    type="checkbox"
+                    id="cheese"
+                    name="checkbox_cheese"
+                    value="cheese"
+                    />
+                    <label for="cheese">cheese: </label>
+                  </div>
+                  <div>
+                    <input
+                    type="checkbox"
+                    id="salami"
+                    name="checkbox_salami"
+                    value="salami"
+                    />
+                    <label for="salami">salami: </label>
+                  </div>
+                  <div>
+                    <input
+                    type="checkbox"
+                    id="onion"
+                    name="checkbox_onion"
+                    value="onion"
+                    />
+                    <label for="onion">onion: </label>
+                  </div>
+                  <div>
+                    <input
+                    type="checkbox"
+                    id="mushrooms"
+                    name="checkbox_mushrooms"
+                    value="mushrooms"
+                    />
+                    <label for="mushrooms">mushrooms: </label>
+                  </div>
+                  <div>
+                    <input
+                    type="checkbox"
+                    id="olives"
+                    name="checkbox_olives"
+                    value="olives"
+                    />
+                    <label for="olives">olives: </label>
+                  </div>
+                </div>
+              </div>
+              <p id="toppings-validity-msg" class="error-msg"></p>
+            </div>
           </div>
-
           <div id="image-checkbox">
-            <h3>Shoose pizza image:</h3>
+            <h3>Choose pizza image:</h3>
             <ul>
               <li class="pizza_img">
                 <input type="radio" id="pizza-margarita" name="photo" />
@@ -100,54 +158,80 @@
                   <img src="./assets/img/salami.jpg" alt="pizza margarita" />
                 </label>
               </li>
+              <li class="pizza_img">
+                <input type="radio" id="pizza-olives" name="photo" />
+                <label for="pizza-olives" class="radio-boxes">
+                  <img
+                    src="./assets/img/olives-topped.jpg"
+                    alt="pizza with olives"
+                  />
+                </label>
+              </li>
+              <li class="pizza_img">
+                <input type="radio" id="pizza-mushrooms" name="photo" />
+                <label for="pizza-mushrooms" class="radio-boxes">
+                  <img
+                    src="./assets/img/mushroom-topped.jpg"
+                    alt="pizza with mushrooms"
+                  />
+                </label>
+              </li>
             </ul>
           </div>
         </div>
-        <button type="button" id="submitForm">Add New pizza</button>
-      </section>
-    </form>
-    <div id="remove-pizza-message" class="removePizzaMessage">
-      <p>Do you really want to remove pizza from menu?</p>
-      <button id="confirm-remove">Yes</button>
-      <button id="cancel-remove">No</button>
-    </div>
-    <div>
-      <h1>PIZZA MENU:</h1>
-      <form class="sort-radio-group">
-        <p>Sort by:</p>
         <div>
-          <input type="radio" id="sort-name" name="sort" value="Name" checked>
-          <label for="sort-name" >Name</label>
-        </div>
-        <div>
-          <input type="radio" id="sort-price" name="sort" value="Price" >
-          <label for="sort-price">Price</label>
-        </div>
-        <div>
-          <input type="radio" id="sort-heat" name="sort" value="Heat">
-          <label for="sort-heat">Heat</label>
+          <button type="button" id="submitForm">Add</button>
         </div>
       </form>
-      
-      
-      <ul id="pizza_list_parent">
-        <!-- pizza list items will be added here -->
-      </ul>
+
+      <div id="remove-pizza-message" class="removePizzaMessage">
+        <p>Do you really want to remove pizza from menu?</p>
+        <button id="confirm-remove">Yes</button>
+        <button id="cancel-remove">No</button>
+      </div>
+      <div>
+        <h1>PIZZA MENU:</h1>
+        <form class="sort-radio-group">
+          <p>Sort by:</p>
+          <div>
+            <input
+              type="radio"
+              id="sort-name"
+              name="sort"
+              value="Name"
+              checked
+            />
+            <label for="sort-name">Name</label>
+          </div>
+          <div>
+            <input type="radio" id="sort-price" name="sort" value="Price" />
+            <label for="sort-price">Price</label>
+          </div>
+          <div>
+            <input type="radio" id="sort-heat" name="sort" value="Heat" />
+            <label for="sort-heat">Heat</label>
+          </div>
+        </form>
+
+        <ul id="pizza_list_parent">
+          <!-- pizza list items will be added here -->
+        </ul>
+      </div>
+      <template id="new_pizza">
+        <li class="pizza_list_item">
+          <div class="pizza-title-block">
+            <h2 class="pizza-name"></h2>
+          </div>
+          <div class="price-box">
+            <h3 class="pizza-price"></h3>
+            <h3>Eu</h3>
+          </div>
+          <p class="pizza-toppings-list"></p>
+          <img class="chosen-pizza-photo" src="" alt="" />
+          <button type="button" class="remove-button">Remove pizza</button>
+        </li>
+      </template>
     </div>
-    <template id="new_pizza">
-      <li class="pizza_list_item">
-        <div class="pizza-title-block">
-          <h2 class="pizza-name"></h2>
-        </div>
-        <div class="price-box">
-          <h3 class="pizza-price"></h3>
-          <h3>Eu</h3>
-        </div>
-        <p class="pizza-toppings-list"></p>
-        <img class="chosen-pizza-photo" src="" alt="" />
-        <button type="button" class="remove-button">Remove pizza</button>
-      </li>
-    </template>
     <script type="text/javascript" src="./scripts.js"></script>
   </body>
 </html>
