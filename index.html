@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="container">
-      <h2>Fill the form, press add button and have a custom pizza menu</h2>
+      <h2 id="container-header">Fill the form, press add button and have a custom pizza menu</h2>
       <form id="create-pizza-form">
         <div id="input-fields">
           <div id="filling-form">
@@ -89,46 +89,46 @@
                 <div>
                   <div>
                     <input
-                    type="checkbox"
-                    id="cheese"
-                    name="checkbox_cheese"
-                    value="cheese"
+                      type="checkbox"
+                      id="cheese"
+                      name="checkbox_cheese"
+                      value="cheese"
                     />
                     <label for="cheese">cheese: </label>
                   </div>
                   <div>
                     <input
-                    type="checkbox"
-                    id="salami"
-                    name="checkbox_salami"
-                    value="salami"
+                      type="checkbox"
+                      id="salami"
+                      name="checkbox_salami"
+                      value="salami"
                     />
                     <label for="salami">salami: </label>
                   </div>
                   <div>
                     <input
-                    type="checkbox"
-                    id="onion"
-                    name="checkbox_onion"
-                    value="onion"
+                      type="checkbox"
+                      id="onion"
+                      name="checkbox_onion"
+                      value="onion"
                     />
                     <label for="onion">onion: </label>
                   </div>
                   <div>
                     <input
-                    type="checkbox"
-                    id="mushrooms"
-                    name="checkbox_mushrooms"
-                    value="mushrooms"
+                      type="checkbox"
+                      id="mushrooms"
+                      name="checkbox_mushrooms"
+                      value="mushrooms"
                     />
                     <label for="mushrooms">mushrooms: </label>
                   </div>
                   <div>
                     <input
-                    type="checkbox"
-                    id="olives"
-                    name="checkbox_olives"
-                    value="olives"
+                      type="checkbox"
+                      id="olives"
+                      name="checkbox_olives"
+                      value="olives"
                     />
                     <label for="olives">olives: </label>
                   </div>
@@ -186,30 +186,33 @@
 
       <div id="remove-pizza-message" class="removePizzaMessage">
         <p>Do you really want to remove pizza from menu?</p>
-        <button id="confirm-remove">Yes</button>
-        <button id="cancel-remove">No</button>
+        <button id="confirm-remove">Remove</button>
+        <button id="cancel-remove">Keep</button>
       </div>
-      <div>
-        <h1>PIZZA MENU:</h1>
+
+      <div id="pizza-menu">
+        <h1>PIZZA MENU</h1>
         <form class="sort-radio-group">
-          <p>Sort by:</p>
-          <div>
-            <input
-              type="radio"
-              id="sort-name"
-              name="sort"
-              value="Name"
-              checked
-            />
-            <label for="sort-name">Name</label>
-          </div>
-          <div>
-            <input type="radio" id="sort-price" name="sort" value="Price" />
-            <label for="sort-price">Price</label>
-          </div>
-          <div>
-            <input type="radio" id="sort-heat" name="sort" value="Heat" />
-            <label for="sort-heat">Heat</label>
+          <h4>Sort by:</h4>
+          <div id="sort-radio-fields">
+            <div>
+              <input
+                type="radio"
+                id="sort-name"
+                name="sort"
+                value="Name"
+                checked
+              />
+              <label for="sort-name">Name</label>
+            </div>
+            <div>
+              <input type="radio" id="sort-price" name="sort" value="Price" />
+              <label for="sort-price">Price</label>
+            </div>
+            <div>
+              <input type="radio" id="sort-heat" name="sort" value="Heat" />
+              <label for="sort-heat">Heat</label>
+            </div>
           </div>
         </form>
 
@@ -219,16 +222,28 @@
       </div>
       <template id="new_pizza">
         <li class="pizza_list_item">
-          <div class="pizza-title-block">
-            <h2 class="pizza-name"></h2>
+          <div id="created-pizza">
+            <div class="pizza-info">
+              <div class="pizza-title-block">
+                <h2 class="pizza-name"></h2>
+              </div>
+              <div class="price-box">
+                <h3 class="pizza-price"></h3>
+                <h3>Eu</h3>
+              </div>
+              <div id="toppings-list-box">
+                <h4>Toppings:</h4>
+                <p class="pizza-toppings-list"></p>
+              </div>
+            </div>
+            <div class="chosen-image">
+              <img class="chosen-pizza-photo" src="" alt="" />
+            </div>
           </div>
-          <div class="price-box">
-            <h3 class="pizza-price"></h3>
-            <h3>Eu</h3>
+          <div id="remove-pizza-button-div">
+            <button type="button" class="remove-button">Remove pizza</button>
           </div>
-          <p class="pizza-toppings-list"></p>
-          <img class="chosen-pizza-photo" src="" alt="" />
-          <button type="button" class="remove-button">Remove pizza</button>
+          <hr />
         </li>
       </template>
     </div>

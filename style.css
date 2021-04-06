@@ -2,6 +2,8 @@ body {
   margin: 0 auto;
   text-align: center;
   font-family: "Roboto Condensed", sans-serif;
+  background: url("./assets/img/pizza-PNG.png") right -10% bottom no-repeat;
+  background-attachment: fixed;
 }
 
 .page-header {
@@ -49,8 +51,13 @@ h3 {
 }
 
 .container {
+  padding-top: 2%;
   width: 60%;
   margin: 0 auto;
+}
+
+#container-header {
+  margin: 0 0 2% 0;
 }
 
 #required-description-msg {
@@ -87,6 +94,9 @@ input[type="radio"] + label {
 label {
   cursor: pointer;
 }
+label:hover {
+  box-shadow: 0 0 5pt 0.5pt #5e5e5e;
+}
 
 input[type="text"]:hover,
 input[type="number"]:hover,
@@ -108,25 +118,21 @@ input[type="radio"]:checked {
 }
 
 #submitForm {
-  border: solid 1.5px #000000;
-  box-shadow: 0 0 5pt 0.5pt #d3d3d3;
+  border: solid 1.5px rgb(40, 122, 40);
   line-height: 2.5;
   padding: 0 20px;
   transition: 0.3s;
   border-radius: 0%;
   color: white;
-  background-color: black;
+  background-color: rgb(40, 122, 40);
   text-transform: uppercase;
+  cursor: pointer;
 }
 #submitForm:hover {
-  box-shadow: 0 0 5pt 0.5pt #5e5e5e;
-  border: solid 1.5px #b9b8b8;
-
+  border: solid 1.5px #ffffff;
 }
 #submitForm:focus {
-  border: solid 1.5px #b9b8b8;
-
-  box-shadow: 0 0 5pt 0.5pt #5e5e5e;
+  border: solid 1.5px #ffffff;
   outline-width: 0px;
   outline-color: #5e5e5e;
 }
@@ -156,6 +162,7 @@ input[type="radio"]:checked {
 
 .inputs input {
   width: 100%;
+  line-height: 1.5rem;
 }
 
 #toppings {
@@ -192,12 +199,17 @@ abbr[title] {
   padding-right: 2%;
 }
 
+#image-checkbox h3 {
+  margin: 0;
+}
+
 ul li img {
-  width: 30%;
+  width: 100%;
 }
 
 ul {
   list-style-type: none;
+  padding: 0;
 }
 
 .pizza_img {
@@ -254,16 +266,111 @@ ul {
 
 :checked + .radio-boxes img {
   transform: scale(0.9);
-  /* box-shadow: 0 0 5px #333; */
   z-index: -1;
 }
 
+#pizza-menu h1,
+h4 {
+  margin: 2% 0 2% 0;
+}
+
+#sort-radio-fields {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#sort-radio-fields div {
+  width: 10%;
+}
+#sort-radio-fields div label {
+  padding: 5%;
+}
+
+#pizza_list_parent {
+  padding: 0;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px black;
+  background-color: rgb(216, 216, 216);
+}
+
 .pizza_list_item {
-  border: 1px solid rgb(163, 156, 156);
+  display: flex;
+  flex-direction: column;
+}
+
+hr {
+  width: 90%;
+  color: rgb(163, 156, 156);
+}
+
+#created-pizza {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 2%;
+}
+
+.pizza-info {
+  width: 60%;
+  text-align: left;
+}
+.pizza-info h3,
+h2 {
+  margin: 0;
+}
+
+#toppings-list-box {
+  display: flex;
+  align-items: center;
+}
+#toppings-list-box h4 {
+  padding-right: 2%;
+}
+#toppings-list-box p {
+  letter-spacing: 0.1rem;
+}
+
+#remove-pizza-button-div {
+  text-align: left;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.remove-button {
+  border: solid 1.5px red;
+  line-height: 2.5;
+  padding: 0 20px;
+  transition: 0.3s;
+  border-radius: 0%;
+  color: white;
+  background-color: red;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.remove-button:hover {
+  border: solid 1.5px #ffffff;
+}
+.remove-button:focus {
+  border: solid 1.5px #ffffff;
+  outline-width: 0px;
+  outline-color: #5e5e5e;
+}
+
+.chosen-image {
+  width: 20%;
+  text-align: center;
+}
+
+.chosen-pizza-photo.addStyling {
+  padding: 5%;
+  border: 1px solid #fff;
+  width: 90%;
+  max-height: 155px;
+  object-fit: cover;
 }
 
 .chilli-pepper-image {
-  height: 10px;
+  height: 50px;
   width: auto;
   padding: 1%;
 }
@@ -274,26 +381,75 @@ ul {
 }
 
 #remove-pizza-message {
-  /* display: none; */
   opacity: 0;
   position: fixed;
   z-index: 10;
   background-color: rgba(255, 255, 255, 0);
-  width: 40%;
+  width: 50%;
   border: 1px solid #ccc;
   box-shadow: 1px 1px 1px black;
   padding: 16px;
-  left: 28%;
+  left: 25%;
   top: 0%;
   box-sizing: border-box;
   transition: all 0.2s ease;
+
 }
 
 #remove-pizza-message.show {
-  /* display: block; */
   opacity: 1;
   background-color: rgba(255, 255, 255, 1);
   top: 30%;
+}
+
+#remove-pizza-message button {
+  margin: 0 2% 0 2%;
+}
+
+#remove-pizza-message p {
+  font-weight: 700;
+}
+
+#confirm-remove {
+  border: solid 1.5px red;
+  line-height: 2.5;
+  padding: 0 20px;
+  transition: 0.3s;
+  border-radius: 0%;
+  color: white;
+  background-color: red;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+#confirm-remove:hover {
+  border: solid 1.5px #ffffff;
+}
+#confirm-remove:focus {
+  border: solid 1.5px #ffffff;
+  outline-width: 0px;
+  outline-color: #5e5e5e;
+}
+
+#cancel-remove {
+  border: solid 1.5px rgb(40, 122, 40);
+  line-height: 2.5;
+  padding: 0 20px;
+  transition: 0.3s;
+  border-radius: 0%;
+  color: white;
+  background-color: rgb(40, 122, 40);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+#cancel-remove:hover {
+  border: solid 1.5px #ffffff;
+}
+#cancel-remove:focus {
+  border: solid 1.5px #ffffff;
+  outline-width: 0px;
+  outline-color: #5e5e5e;
 }
 
 .price-box {
@@ -308,12 +464,29 @@ ul {
 /* responsive parts */
 
 @media screen and (max-width: 1400px) {
+  body {
+    background: url("./assets/img/pizza-PNG.png") right -20% bottom no-repeat;
+    background-attachment: fixed;
+  }
+
   .container,
   #slogan {
     width: 70%;
   }
+
+
+
+  #remove-pizza-message button {
+    padding: 0 1% 0 1%;
+  }
+
 }
 @media screen and (max-width: 1200px) {
+  body {
+    background: url("./assets/img/pizza-PNG.png") right -30% bottom no-repeat;
+    background-attachment: fixed;
+  }
+
   .container,
   #slogan {
     width: 80%;
@@ -325,15 +498,85 @@ ul {
 }
 
 @media screen and (max-width: 900px) {
+  body {
+    background: url("./assets/img/pizza-PNG.png") right -15% bottom no-repeat;
+    background-attachment: fixed;
+    background-size: auto 500px;
+  }
+
   .input-boxes,
-  #toppings-container {
+  #toppings-container div {
     width: 90%;
+  }
+
+  #sort-radio-fields {
+    justify-content: space-around;
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
+  body {
+    background: url("./assets/img/pizza-PNG.png") right -20% bottom 10% no-repeat;
+    background-attachment: fixed;
+    background-size: auto 300px;
+  }
+
   .container,
   #slogan {
     width: 90%;
+  }
+  #slogan-block {
+    height: 20vh;
+  }
+  #slogan h1 {
+    letter-spacing: 0.2rem;
+  }
+
+  p {
+    font-size: 0.8em;
+  }
+
+  h4 {
+    font-size: 0.9em;
+  }
+
+  h3 {
+    font-size: 1em;
+  }
+
+  h2 {
+    font-size: 1.2em;
+  }
+  h1 {
+    font-size: 1.5em;
+  }
+
+  .remove-button {
+    line-height: 2;
+    font-size: 0.8em;
+  }
+
+  #remove-pizza-message button {
+    font-size: 0.7em;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  body {
+    background: url("./assets/img/pizza-PNG.png") right -40% bottom 15% no-repeat;
+    background-attachment: fixed;
+    background-size: auto 250px;
+  }
+
+  #toppings-container div {
+    width: 80%;
+  }
+
+}
+@media screen and (max-width: 320px) {
+
+
+  #remove-pizza-message button {
+    margin: 2%;
   }
 }
