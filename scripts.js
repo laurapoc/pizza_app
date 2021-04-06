@@ -220,13 +220,14 @@ function addPizzaInstance(pizzaObj) {
     numberOfCreatedChillis++;
   }
   let createdPizzaPrice = clone.querySelector(".pizza-price");
-  createdPizzaPrice.textContent = pizzaObj.price;
+  createdPizzaPrice.textContent = "Price: " + pizzaObj.price;
   let createdPizzaToppings = clone.querySelector(".pizza-toppings-list");
   createdPizzaToppings.textContent = pizzaObj.toppings.join(", ");
   if (pizzaObj.image) {
     let createdPizzaPhoto = clone.querySelector(".chosen-pizza-photo");
     createdPizzaPhoto.src = pizzaObj.image;
     createdPizzaPhoto.alt = pizzaObj.name;
+    createdPizzaPhoto.classList.add("addStyling");
   }
   let removePizzaButton = clone.querySelector(".remove-button");
   removePizzaButton.id = pizzaObj.name;
