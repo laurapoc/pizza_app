@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 const PIZZA_STORAGE_KEY = "PIZZA_STORAGE";
 const submit = document.getElementById("submitForm");
 const removeMessage = document.getElementById("remove-pizza-message");
@@ -190,12 +191,12 @@ function clearInputFields() {
       }
     }
   }
-  for (var i = 0; i < pizzaImageInputs.length; i++) {
-    if (pizzaImageInputs[i].type == "radio") {
+  for (var j = 0; j < pizzaImageInputs.length; j++) {
+    if (pizzaImageInputs[j].type == "radio") {
       // check if the radio is checked.
       //   if it is - set checked to false
-      if (pizzaImageInputs[i].checked) {
-        pizzaImageInputs[i].checked = false;
+      if (pizzaImageInputs[j].checked) {
+        pizzaImageInputs[j].checked = false;
       }
     }
   }
@@ -349,4 +350,3 @@ function removePizzaFromListAndFromLocalStorage(button) {
     displaySortedPizzaList(items);
   }
 }
-
