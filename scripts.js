@@ -4,6 +4,7 @@ const submit = document.getElementById("submitForm");
 const removeMessage = document.getElementById("remove-pizza-message");
 const confirmPizzaRemove = document.getElementById("confirm-remove");
 const cancelPizzaRemove = document.getElementById("cancel-remove");
+const pizzaMenu = document.getElementById("pizza-menu");
 let pizzaNameInput = document.getElementById("pizzaName");
 let priceInput = document.getElementById("price");
 let heatInput = document.getElementById("heat");
@@ -66,9 +67,8 @@ function savePizza() {
       : [];
     pizzaStorage.push(pizza);
     localStorage.setItem(PIZZA_STORAGE_KEY, JSON.stringify(pizzaStorage));
-
-    addPizzaInstance(pizza);
-    sortPizzaList();
+    pizzaMenu.style.display = "block";
+    loopThroughAllStorageValuesAndDisplayThem();
     clearInputFields();
     clearValidationMessages();
   } else {
@@ -129,6 +129,7 @@ function clearValidationMessages() {
   document.getElementById("pizza-name-validity-msg").innerHTML = "";
   document.getElementById("price-validity-msg").innerHTML = "";
   document.getElementById("toppings-validity-msg").innerHTML = "";
+  document.getElementById("heat-validity-msg").innerHTML = "";
 }
 
 // get checked toppings values and push them into picked toppings array
@@ -232,12 +233,13 @@ function addPizzaInstance(pizzaObj) {
   }
   let removePizzaButton = clone.querySelector(".remove-button");
   removePizzaButton.id = pizzaObj.name;
+  // let allPizzas = getAllStorageValues();
   const remove = clone.querySelector(".remove-button");
   remove.addEventListener("click", () => {
     removeMessage.classList.add("show");
     confirmPizzaRemove.addEventListener("click", () => {
-      removePizzaFromListAndFromLocalStorage(remove);
-      sortPizzaList();
+      removePizzaFromListAndFromLocalStorage(pizzaObj.name);
+
       removeMessage.classList.remove("show");
     });
     cancelPizzaRemove.addEventListener("click", () => {
@@ -264,8 +266,13 @@ function getCheckedSorting() {
 function loopThroughAllStorageValuesAndDisplayThem() {
   let allValues = getAllStorageValues();
   // sort pizza (default option: by name)
-  sortPizzaList();
-  displaySortedPizzaList(allValues);
+  if (allValues.length === 0) {
+    pizzaMenu.style.display = "none";
+    document.getElementById("create-pizza-form").style.margin = "3% 0 3% 0";
+  } else {
+    allValues = sortPizzaList(allValues);
+    displaySortedPizzaList(allValues);
+  }
 }
 
 function clearPizzaList() {
@@ -277,6 +284,20 @@ function displaySortedPizzaList(pizzaList) {
   pizzaList.forEach((pizza) => {
     addPizzaInstance(pizza);
   });
+}
+
+function sortPizzaList(sortedPizzas) {
+  if (getCheckedSorting() === "Name") {
+    clearPizzaList();
+    sortPizzaListByName(sortedPizzas);
+  } else if (getCheckedSorting() === "Price") {
+    clearPizzaList();
+    sortPizzaListByPrice(sortedPizzas);
+  } else if (getCheckedSorting() === "Heat") {
+    clearPizzaList();
+    sortPizzaListByHeat(sortedPizzas);
+  }
+  return sortedPizzas;
 }
 
 function sortPizzaListByName(allPizzas) {
@@ -322,31 +343,14 @@ function sortPizzaListByHeat(allPizzas) {
   });
 }
 
-function sortPizzaList() {
-  let allPizzas = getAllStorageValues();
-  if (getCheckedSorting() === "Name") {
-    clearPizzaList();
-    sortPizzaListByName(allPizzas);
-    displaySortedPizzaList(allPizzas);
-  } else if (getCheckedSorting() === "Price") {
-    clearPizzaList();
-    sortPizzaListByPrice(allPizzas);
-    displaySortedPizzaList(allPizzas);
-  } else if (getCheckedSorting() === "Heat") {
-    clearPizzaList();
-    sortPizzaListByHeat(allPizzas);
-    displaySortedPizzaList(allPizzas);
-  }
-}
-
-function removePizzaFromListAndFromLocalStorage(button) {
+function removePizzaFromListAndFromLocalStorage(pizzaNameToRemove) {
   clearPizzaList();
   let items = getAllStorageValues();
   for (var i = 0; i < items.length; i++) {
-    if (items[i].name === button.id) {
+    if (items[i].name === pizzaNameToRemove) {
       items.splice(i, 1);
     }
     localStorage.setItem(PIZZA_STORAGE_KEY, JSON.stringify(items));
-    displaySortedPizzaList(items);
+    loopThroughAllStorageValuesAndDisplayThem();
   }
 }
