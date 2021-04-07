@@ -42,6 +42,17 @@ loopThroughAllStorageValuesAndDisplayThem();
 
 submit.addEventListener("click", savePizza);
 
+confirmPizzaRemove.addEventListener("click", () => {
+  removePizzaFromListAndFromLocalStorage(confirmPizzaRemove.data);
+  confirmPizzaRemove.data = "";
+  removeMessage.classList.remove("show");
+});
+
+cancelPizzaRemove.addEventListener("click", () => {
+  confirmPizzaRemove.data = "";
+  removeMessage.classList.remove("show");
+});
+
 document.addEventListener("keyup", function (event) {
   // check if key on the keyboard is "Enter"
   if (event.keyCode === 13) {
@@ -237,14 +248,7 @@ function addPizzaInstance(pizzaObj) {
   const remove = clone.querySelector(".remove-button");
   remove.addEventListener("click", () => {
     removeMessage.classList.add("show");
-    confirmPizzaRemove.addEventListener("click", () => {
-      removePizzaFromListAndFromLocalStorage(pizzaObj.name);
-
-      removeMessage.classList.remove("show");
-    });
-    cancelPizzaRemove.addEventListener("click", () => {
-      removeMessage.classList.remove("show");
-    });
+    confirmPizzaRemove.data = pizzaObj.name;
   });
   parent.appendChild(clone);
 }
@@ -345,12 +349,14 @@ function sortPizzaListByHeat(allPizzas) {
 
 function removePizzaFromListAndFromLocalStorage(pizzaNameToRemove) {
   clearPizzaList();
-  let items = getAllStorageValues();
-  for (var i = 0; i < items.length; i++) {
-    if (items[i].name === pizzaNameToRemove) {
-      items.splice(i, 1);
-    }
-    localStorage.setItem(PIZZA_STORAGE_KEY, JSON.stringify(items));
-    loopThroughAllStorageValuesAndDisplayThem();
-  }
+  let items = getAllStorageValues().filter(pizza => pizza.name !== pizzaNameToRemove);
+  // for (var i = 0; i < items.length; i++) {
+  //   if (items[i].name === pizzaNameToRemove) {
+  //     console.log(items[i].name, pizzaNameToRemove);
+  //     // items.splice(i, 1);
+  //   }
+  // }
+
+  localStorage.setItem(PIZZA_STORAGE_KEY, JSON.stringify(items));
+  loopThroughAllStorageValuesAndDisplayThem();
 }
