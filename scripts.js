@@ -109,16 +109,20 @@ function showValidationMessages() {
   if (!pizzaNameInput.checkValidity()) {
     document.getElementById("pizza-name-validity-msg").innerHTML =
       pizzaNameInput.validationMessage;
+      document.getElementById("pizzaName").style.border = "1px solid red";
   } else if (!priceInput.checkValidity()) {
     document.getElementById("price-validity-msg").innerHTML =
       priceInput.validationMessage;
+      document.getElementById("price").style.border = "1px solid red";
   } else if (getCheckedToppings().length < 2) {
     document.getElementById(
       "toppings-validity-msg"
     ).innerHTML = toppingsValidationMessage;
+    document.getElementById("toppings-list").style.border = "1px solid red";
   } else if (!heatInput.checkValidity()) {
     document.getElementById("heat-validity-msg").innerHTML =
       heatInput.validationMessage;
+      document.getElementById("heat").style.border = "1px solid red";
   }
 }
 
@@ -138,9 +142,13 @@ function checkDuplicatePizzaNames() {
 
 function clearValidationMessages() {
   document.getElementById("pizza-name-validity-msg").innerHTML = "";
+  document.getElementById("pizzaName").style.border = "none";
   document.getElementById("price-validity-msg").innerHTML = "";
+  document.getElementById("price").style.border = "none";
   document.getElementById("toppings-validity-msg").innerHTML = "";
+  document.getElementById("toppings-list").style.border = "none";
   document.getElementById("heat-validity-msg").innerHTML = "";
+  document.getElementById("heat").style.border = "none";
 }
 
 // get checked toppings values and push them into picked toppings array
@@ -350,12 +358,6 @@ function sortPizzaListByHeat(allPizzas) {
 function removePizzaFromListAndFromLocalStorage(pizzaNameToRemove) {
   clearPizzaList();
   let items = getAllStorageValues().filter(pizza => pizza.name !== pizzaNameToRemove);
-  // for (var i = 0; i < items.length; i++) {
-  //   if (items[i].name === pizzaNameToRemove) {
-  //     console.log(items[i].name, pizzaNameToRemove);
-  //     // items.splice(i, 1);
-  //   }
-  // }
 
   localStorage.setItem(PIZZA_STORAGE_KEY, JSON.stringify(items));
   loopThroughAllStorageValuesAndDisplayThem();
